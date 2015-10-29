@@ -1,13 +1,14 @@
 /*
- * It's lexical analyzer. It allocates from plain text lexemes
- * which matches this regular exeption:
- * (_?[a-zA-Z]\w*)|(\\d*\\.\\d*)|(<|>|=|:=|+|-|:|;)|(case|of|end)
- * and puts them into the lexical table with their type.
- * In other words, it searches keywords like "case", "of", "end",
- * identifiers, comprasion signs, plus, minus and float digits.
+ * Это лексический анализатор. Из обычного текста он выделяет лексемы,
+ * попадающие под следующее регулярное выражение:
+ * (_?[a-zA-Z]\w*)|(\\d*\\.\\d*)|(:=|+|-|:|;)|(case|of|end)
+ * и записывает их в таблицу лексем, указывая их тип
+ * Другими словами, он ищет ключевые слова "case", "of" и "end",
+ * идентификаторы, плюсы, минусы, точки с запятой, двоеточия и числа с
+ * плавающей точко.
  *
- * Lexical table here is vector of vectors of qstrings, and it's
- * a bit inefficiently, but better for debugging.
+ * Таблица лексем - это двумерный вектор строк, что несколько
+ * неэффективно с точки зрения расхода памяти, зато упрощает отладку программы.
  */
 
 #ifndef LEXICALANALYZER_H
@@ -48,8 +49,8 @@ private:
     void showError() const;
     void showError(QString text) const;
 
-    //those functions verify the lexeme and
-    //put it into the lexical table in case of success
+    //эти функции проверяют строку/символ на соответствие
+    //типу лексему и если всё хорошо, добавляют строчку в таблицу лексем
     bool isIdentifier(QString & lexeme);
     bool isDigit(QString & lexeme);
     bool isAssign(QChar first, QChar second);
@@ -58,7 +59,7 @@ private:
     bool isColon(QChar symbol);
     bool isSemicolon(QChar symbol);
 
-    //compare specified type with type of lexeme with index i
+    //сравнивает указанный тип с типом лексемы в строчке i
     bool compare(int i, Type type) {
         return lexemeTypes[int(type)] == lexicalTable.at(1).at(i);
     }

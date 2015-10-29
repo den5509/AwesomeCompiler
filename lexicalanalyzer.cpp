@@ -13,10 +13,10 @@ LexicalAnalyzer::LexicalAnalyzer(QObject *parent) : QObject(parent)
     identifier.setPattern("^(_?[a-zA-Z]\\w*)");
     digit.setPattern("^(\\d*\\.\\d*)");
 
-    lexicalTable.push_back(QVector<QString>()); //for lexeme
-    lexicalTable.push_back(QVector<QString>()); //for type of lexeme
-    lexicalTable.push_back(QVector<QString>()); //for labels
-    lexicalTable.push_back(QVector<QString>()); //for labels to use
+    lexicalTable.push_back(QVector<QString>()); //столбец лексем
+    lexicalTable.push_back(QVector<QString>()); //столбец типа лексем
+    lexicalTable.push_back(QVector<QString>()); //столбец служебной инфы
+    lexicalTable.push_back(QVector<QString>()); //ещё один столбец
 
     lexemeTypes << tr("идентификатор") << tr("ключевое слово") << tr("число")
                 << tr("арифметический оператор") << tr("присваивание")
@@ -39,13 +39,13 @@ void LexicalAnalyzer::analyze(QString source)
 
     source = source.simplified();
     source += ' '; /*
-                    * because cycle below required terminal symbol at the end of source.
-                    * this also allows to get rid of the check (i < source.size() - 1)
-                    * in comments and assignment conditions.
-                    * Also, this cycle is reinventing the wheel; it's better maybe to use
-                    * QString::split(), but i'm too lazy to rewriting this code.
-                    * It's also better to use QRegularExpression instead of QRegExp,
-                    * but... you know. =)
+                    * потому что циклу ниже нужен терминальный символ в конце строки. А ещё
+                    * такой хак позволяет избавиться от проверок (i < source.size() - 1)
+                    * при разборе комментариев и присваиваний.
+                    * Вообще, это всё изобретение колеса и было бы лучше испсользовать
+                    * QString::split(), но я слишком ленив, чтобы это переписывать
+                    * Кроме того, лучше использовать QRegularExpression вместо QRegExp,
+                    * но... Как обычно. =)
                     */
     QString lexeme;
 

@@ -80,8 +80,8 @@ void UI::setLexicalTable()
 
     QStringList headers;
 
-    // I combine labels and labels to use because it all is
-    // uninteresting and rare information
+    // Я совмещаю два столбца служебной инфы в один, потому что
+    // всё равно всем пофиг
     for (int i = 0; i < la->getLexTable()[0].count(); i++)
     {
         lt->setItem(i, 1, new QTableWidgetItem(la->getLexTable()[1][i]));
