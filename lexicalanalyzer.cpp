@@ -4,10 +4,9 @@
 
 LexicalAnalyzer::LexicalAnalyzer(QObject *parent) : QObject(parent)
 {
-    comprasionSigns << '<' << '>' << '=';
     arithmeticOperators << '+' << '-';
     terminalSymbols << ' ' << '\t' << '\v' << '\f' << '\n' << '\r' << ';' << ':' << '{';
-    terminalSymbols.unite(comprasionSigns).unite(arithmeticOperators);
+    terminalSymbols.unite(arithmeticOperators);
 
     keyWords << "case" << "of" << "end";
 
@@ -20,8 +19,8 @@ LexicalAnalyzer::LexicalAnalyzer(QObject *parent) : QObject(parent)
     lexicalTable.push_back(QVector<QString>()); //for labels to use
 
     lexemeTypes << tr("идентификатор") << tr("ключевое слово") << tr("число")
-                << tr("арифметический оператор") << tr("знак сравнения")
-                << tr("присваивание") << tr("точка с запятой") << tr("двоеточие");
+                << tr("арифметический оператор") << tr("присваивание")
+                << tr("точка с запятой") << tr("двоеточие");
 }
 
 //-------------------------------------------------------------------
@@ -68,7 +67,6 @@ void LexicalAnalyzer::analyze(QString source)
 
             if (lexeme.isEmpty())
             {
-                isComprasionSign(source[i]);
                 isSemicolon(source[i]);
                 isColon(source[i]);
                 isArithmeticOperator(source[i]);
@@ -157,19 +155,6 @@ bool LexicalAnalyzer::isAssign(QChar first, QChar second)
     if (first == ':' && second == '=')
     {
         putIntoTable(":=", Type::assign);
-        return true;
-    }
-    else
-        return false;
-}
-
-//-------------------------------------------------------------------
-
-bool LexicalAnalyzer::isComprasionSign(QChar symbol)
-{
-    if (comprasionSigns.contains(symbol))
-    {
-        putIntoTable(QString(symbol), Type::comprasionSign);
         return true;
     }
     else

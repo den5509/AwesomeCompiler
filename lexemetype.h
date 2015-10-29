@@ -6,7 +6,6 @@ enum class Type{
     keyword,
     digit,
     arithmeticOperator,
-    comprasionSign,
     assign,
     semicolon,
     colon

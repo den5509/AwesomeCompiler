@@ -40,7 +40,6 @@ private:
     QRegExp identifier;
     QRegExp digit;
     QSet<QChar> terminalSymbols;
-    QSet<QChar> comprasionSigns;
     QSet<QChar> arithmeticOperators;
     QSet<QString> keyWords;
     QVector<QVector<QString>> lexicalTable;
