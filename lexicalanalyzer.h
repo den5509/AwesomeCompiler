@@ -54,7 +54,6 @@ private:
     bool isIdentifier(QString & lexeme);
     bool isDigit(QString & lexeme);
     bool isAssign(QChar first, QChar second);
-    bool isComprasionSign(QChar symbol);
     bool isArithmeticOperator(QChar symbol);
     bool isColon(QChar symbol);
     bool isSemicolon(QChar symbol);
